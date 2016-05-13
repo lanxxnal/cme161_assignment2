@@ -3,14 +3,14 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
 		<meta charset="utf-8">
-		<title>CME 161 Data Visualization</title>
+		<title>Visualization Portfolio of Joseph Wu and Lan Xu</title>
 
 		<!-- site dependencies -->
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 <!-- 		<link herf="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" rel = "stylesheet">
 		<link herf="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js" rel = "stylesheet"> -->
-		<link herf="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css" rel = "stylesheet">
-		<link herf="https://lit-coast-4367.herokuapp.com/assets/css/c3.theme.css" rel = "stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css" rel = "stylesheet">
+		<link href="https://lit-coast-4367.herokuapp.com/assets/css/c3.theme.css" rel = "stylesheet">
 
 
 		<link href="assets/css/style.css" rel="stylesheet">
@@ -18,6 +18,8 @@
 		<!-- dcjs_baseball -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.5/dc.css" rel="stylesheet">
 		<link href="app/assets/css/dcjs_baseball.css" rel="stylesheet">
+		<link href="app/assets/css/d3tutorial.css" rel="stylesheet">
+
 </head>
 <body>
 	<!-- begin wrap -->		
@@ -33,7 +35,7 @@
 				<div class="row">
 
 					<!-- begin header -->
-					<div class=".col-xs-12 ">
+					<div class="col-xs-12 ">
 						<h1>CME161 Assignment2 of Joseph Wu and Lan Xu</h1>
 						<!-- <h4><a href='http://web.stanford.edu/~dderiso/cme151/' target='_blank'>CME 161: Data Visualization</a> <small>Spring 2016</small></h4> -->
 						<hr>
@@ -50,7 +52,7 @@
 						</h3>
 
 						<p>
-							The following visualization uses <a href="https://dc-js.github.io/dc.js/" target="_blank">DC.js</a> library to generate charts that are naturally data driven and reactive therefore providing instant feedback on user's interaction. The following charts provide a descriptive analysis of the <a href="https://tranquil-peak-82564.herokuapp.com/api/v1.0/data/iris/" target="_blank">IRIS</a> dataset. A reset button is created after user's selection or filtering of the charts.  
+							The following visualization uses <a href="https://dc-js.github.io/dc.js/" target="_blank">DC.js</a> library to generate charts that are naturally data driven and reactive therefore providing instant feedback on user's interaction. The following charts provide a descriptive analysis of the <a href="https://tranquil-peak-82564.herokuapp.com/api/v1.0/data/iris/" target="_blank">IRIS</a> dataset. It shows the aggregated statistis regarding species, sepal width, sepal length, petal width and petal length. The user can select and filter out interesting data points to interact with the charts. A reset button is created after user's selection or filtering of the charts.  
 						</p>
 
 						<hr>
@@ -65,14 +67,22 @@
 					<!-- begin viz 1 -->
 					<div class="col-xs-12">
 						<div id="resetButton"> </div>
-						<!-- <h3>Sepal Length</h3> -->
-						<div id = "sepal_length_chart"></div>
-						<!-- <h3> Species</h3> -->
-						<div id = "species_chart"></div>
-						<!-- <h3> Sepal Width</h3> -->
-						<div id = "sepal_width_chart"></div>
-						<div id = "petal_length_chart"></div>
-						<div id = "petal_width_chart"></div>
+						
+						<div id = "sepal_length_chart"> 
+							<h4>Sepal Length</h4>
+						</div>
+						<div id = "species_chart">						
+							<h4> Species</h4>
+						</div>
+						<div id = "sepal_width_chart">
+							<h4> Sepal Width</h4>
+						</div>
+						<div id = "petal_length_chart">
+							<h4> Petal Length</h4>
+						</div>
+						<div id = "petal_width_chart">
+							<h4> Petal Width</h4>
+						</div>
 
 
 
@@ -86,7 +96,7 @@
 
 					<!-- begin viz 2 -->
 				<div class="row">
-					<div class=".col-xs-12">
+					<div class="col-xs-12">
 						<h3>
 						Multi-dimensional Filtering with Crossfilter.js
 						</h3>
@@ -110,13 +120,13 @@
 					<!-- < begin viz 3> -->
 
 				<div class="row">
-					<div class=".col-xs-12">
+					<div class="col-xs-12">
 						<h3>
-						C3.js Tutorial 
+						Data Visualization with C3.js
 						</h3>
 
 						<p>
-					This visualization shows... The library used is <a href="..." target="_blank">...</a>.
+					This visualization shows the venture capital industry in the past 20 years. By analyzing the trend in number of deals, breakdown of deals by stage, and pre-money valuation of companies, we are able to relate the growth of tech industry with what we observe in the VC industry. The visualization comes in the form of slides that allows the user to learn the story step by step. The library used here is  <a href="http://c3js.org/reference.html" target="_blank">C3.js</a>.
 						</p>
 
 						<hr>
@@ -146,13 +156,13 @@
 				<!-- < begin viz 4> -->
 
 				<div class="row">
-					<div class=".col-xs-12">
+					<div class="col-xs-12">
 						<h3>
-						D3.js Tutorial
+						Data Visualization with D3.js
 						</h3>
 
 						<p>
-					This visualization shows... The library used is <a href="..." target="_blank">...</a>.
+					This visualization shows a baking recipe by plotting it into a tree structure, demonstrating each different pastries and its ingredients. The transition effect on size and color of the nodes indicate the number of children each node has. The user can interact with the graph by folding the nodes, filtering according to certain criteria and drag or zoom the whole chart. It also features an "auto-draw" function that grows the tree from root node by node. The library used is <a href="https://d3js.org/" target="_blank">D3.js</a>.
 						</p>
 
 						<hr>
@@ -198,7 +208,7 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.7/crossfilter.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.1/dc.js'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>js
     <script src='assets/js/dcjs/brushinglinking.js'></script>
     <script src='assets/js/c3js/c3.js'></script>
