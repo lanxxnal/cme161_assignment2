@@ -95,7 +95,8 @@ d3.json("https://tranquil-peak-82564.herokuapp.com/api/v1.0/data/iris/", functio
     .centerBar(true)
     .elasticY(true)
     .x(d3.scale.linear().domain([3, 10]))
-    .xUnits(dc.units.fp.precision(.5));
+    .xUnits(dc.units.fp.precision(.5))
+    .title("Sepal Length");
 
   chart_list.push(sepal_length_chart);
 
