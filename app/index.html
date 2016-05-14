@@ -16,9 +16,12 @@
 		<link href="assets/css/style.css" rel="stylesheet">
 
 		<!-- dcjs_baseball -->
+		<link href ="http://seiyria.com/bootstrap-slider/css/bootstrap-slider.css" rel = "stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.5/dc.css" rel="stylesheet">
-		<link href="app/assets/css/dcjs_baseball.css" rel="stylesheet">
-		<link href="app/assets/css/d3tutorial.css" rel="stylesheet">
+		<link href="assets/css/dcjs_baseball.css" rel="stylesheet">
+		<link href="assets/css/d3tutorial.css" rel="stylesheet">
+		<link href="assets/css/cftutorial.css" rel="stylesheet">
+
 
 </head>
 <body>
@@ -102,14 +105,46 @@
 						</h3>
 
 						<p>
-					This visualization shows... The library used is <a href="..." target="_blank">...</a>.
+					This visualization shows. The library used is <a href="http://square.github.io/crossfilter/" target="_blank">crossfilter.js</a>.
 						</p>
 
 						<hr>
-					
-<!-- 						<canvas id="some_name"></canvas>
- -->					
+							<div class="well">
+  								Filter # of Games Played:&nbsp&nbsp <b>0</b>
+  								<input id="n_games_slider" type="text" /> <b>100</b>
+							</div>
+
+							<div class="well">
+  									# of Games Played Range:&nbsp&nbsp <span id="n_games_slider_txt"></span>
+							</div> 
+
+							<div class="well">
+							  Filter Years:&nbsp&nbsp <b>1870</b>
+							  <input id="years_slider" type="text" /> <b>1910</b>
+							</div>
+
+							<div class="well">
+							Year Range:&nbsp&nbsp <span id="years_slider_txt"></span>
+							</div>
+
+							<div class="well">
+							Filter by Team Name (e.g. "NY1"): <input type="text" id="team_box"/>
+							</div>
+
+							<div class="well">
+							Filter by Player Name (e.g. "cummica01"): <input type="text" id="player_box"/>
+							</div>
+
+							<div class="well">
+							Enter "" in search box to reset filters
+							</div> 
 						<hr>
+
+							<div id = "crossfilter">
+							</div>
+
+
+
 
 					</div>
 					<!-- end viz 2 -->
@@ -208,11 +243,18 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.7/crossfilter.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.1/dc.js'></script>
+    <script src  = "https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js"></script>
+    <script src  = "http://seiyria.com/bootstrap-slider/dependencies/js/jquery.min.js"></script>
+    <script src  = "http://seiyria.com/bootstrap-slider/js/bootstrap-slider.js"></script>
+
+
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>js
     <script src='assets/js/dcjs/brushinglinking.js'></script>
     <script src='assets/js/c3js/c3.js'></script>
     <script src='assets/js/d3js/d3.js'></script>
+    <script src='assets/js/crossfilter/cf.js'></script>
+
 
 
 </body>
