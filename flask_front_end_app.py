@@ -12,7 +12,7 @@ def three_route(path):
     return send_from_directory('app/assets/html/', path)
 
 @app.route('/libs/<path:path>')
-def three_route(path):
+def lib_route(path):
     return send_from_directory('app/assets/js/libs', path)
 
 
