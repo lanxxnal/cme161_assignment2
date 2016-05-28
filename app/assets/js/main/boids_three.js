@@ -133,7 +133,7 @@ gui.add(controls_state, 'show_bounding_box')
 // --------------------------------------------------------- 
 // add boids
 
-var n = 200,
+var n = 1,
     boids = [];
 
 for (var i = 0; i < n; i++) {
@@ -181,11 +181,12 @@ function animate() {
             * when you're done, delete the update_boids_warning var above
         **/
         b = boids[i];
-        b.run();
+        b.run(boids);
         b.update_mesh();
         // if(i == 1 && update_boids_warning){ console.log("Action Required: update boid objects"); update_boids_warning = false; } // delete this line
     }
-
+    console.log(scene);
+    console.log(container);
     // render scene
     renderer.render(scene, camera);
 

@@ -102,11 +102,10 @@ Boid.prototype.update_mesh = function() {
         * hence you bind the position of the boids (data) to the position of the mesh (visual)
         * hint: this.position.x is the current x location of the boid
     **/
-
     this.mesh.position.set(this.position.x, this.position.y, this.position.z);
     
     // if(typeof(this.mesh) != "undefined" && this.mesh.position.x == 0 && this.mesh.position.y == 0 && this.mesh.position.z == 0) console.log("Action Required: You need to update the mesh position.") // delete this line
-
+    console.log(this.mesh)
     /** bonus points:
         * No Action Required
         * calculate momentum and map it to color in HSL space
