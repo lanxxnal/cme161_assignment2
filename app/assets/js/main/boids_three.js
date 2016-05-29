@@ -16,7 +16,7 @@ var SCENE_WIDTH = SCENE_HEIGHT = 500;
 
 // bind renderer (THREE.WebGLRenderer ==> GPU!) to canvas, set size, and enable antialiasing
 var canvas = document.getElementById(viz_canvas_id);
-console.log(canvas)
+// console.log(canvas)
 var renderer = new THREE.WebGLRenderer({ 
     "canvas": canvas, 
     "antialias": true 
@@ -85,7 +85,10 @@ var controls_state = {
     "ambient_light_intensity": 1,
     "directional_light_intensity": 1,
     "show_axis": true,
-    "show_bounding_box": true
+    "show_bounding_box": true,
+    "neighborhoodRadius": 100,
+    "maxSteerForce": 0.1,
+    "maxSpeed": 4
 };
 
 gui.add(controls_state, 'ambient_light')
@@ -120,6 +123,36 @@ gui.add(controls_state, 'show_bounding_box')
         else    { container.remove(bounding_box); }
     });
 
+gui.add(controls_state, 'neighborhoodRadius', 0, 300)
+    .onChange(function(value) {
+        for (var i = 0; i < n; i++) {
+        b = boids[i];
+        b._neighborhoodRadius = value;
+        b.run(boids)
+        b.update_mesh();
+        console.log(b._neighborhoodRadius)
+    }        
+    });
+
+gui.add(controls_state, 'maxSpeed', 0, 100)
+    .onChange(function(value) {
+        for (var i = 0; i < n; i++) {
+        b = boids[i];
+        b._maxSpeed = value;
+        b.run(boids)
+        b.update_mesh();
+    }        
+    });
+
+ gui.add(controls_state, 'maxSteerForce', 0, 1)
+    .onChange(function(value) {
+        for (var i = 0; i < n; i++) {
+        b = boids[i];
+        b._maxSteerForce = value;
+        b.run(boids)
+        b.update_mesh();
+    }        
+    });   
 /**
     * Actions Required:
     *  add sliders for the _neighborhoodRadius, _maxSteerForce, and _maxSpeed
@@ -134,8 +167,8 @@ gui.add(controls_state, 'show_bounding_box')
 // --------------------------------------------------------- 
 // add boids
 
-var n = 50,
-    boids = [];
+var n = 200;
+var boids = [];
 
 for (var i = 0; i < n; i++) {
     /**
