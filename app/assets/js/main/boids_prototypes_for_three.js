@@ -9,7 +9,7 @@ Boid.prototype.set_parameters = function() {
     **/
 
     this.radius = Math.random() * 40;
-    this.hue = 0.5;
+       // this.hue = 0.5;
     
     // if(this.radius == 0) console.log("Action Required: You need to set a boid radius.") // delete this line
 
@@ -35,8 +35,9 @@ Boid.prototype.create_geometry = function() {
 
 Boid.prototype.create_material = function() {
     // assign a random color from HSL space
-    this.color = new THREE.Color(); // http://threejs.org/docs/#Reference/Math/Color
-    this.color.setHSL(Math.random(), .85, .5);
+    // this.color = new THREE.Color(); // http://threejs.org/docs/#Reference/Math/Color
+    this.color = new THREE.Color();  
+    this.color.setHSL(0.5, .85, .5);
 
     /**
         * Action Required: fill this in using some material with specular + diffuse lighting
@@ -51,11 +52,11 @@ Boid.prototype.create_material = function() {
                 "opacity": 0.75
             }
     **/
-    
+
     this.material = new THREE.MeshPhongMaterial({
     color: this.color,
     specular: 0x333333,
-    shininess: 100
+    shininess: 0.9
   });
     // this.material = new THREE.MeshPhongMaterial();
     // this.material.color = this.color;
@@ -63,6 +64,7 @@ Boid.prototype.create_material = function() {
     // this.material.shininess = 0.9;
     this.material.transparent = true;
     this.material.opacity = 0.75;
+    console.log(this.color)
 
 
     // if(typeof(this.material) == "undefined") console.log("Action Required: You need to set a boid material.") // delete this line
@@ -120,5 +122,5 @@ Boid.prototype.update_mesh = function() {
     var momentum = this.velocity.length() * this.radius;
     if( momentum > this.max_momentum){ this.max_momentum = momentum; this.range_momentum = this.max_momentum - this.min_momentum; }
     if( momentum < this.min_momentum){ this.min_momentum = momentum; this.range_momentum = this.max_momentum - this.min_momentum; }
-    this.mesh.material.color.setHSL( .8, momentum/this.range_momentum * 1.1, momentum/this.range_momentum * 0.4);
+    this.mesh.material.color.setHSL( Math.random(), momentum/this.range_momentum * 1.1, momentum/this.range_momentum * 0.4);
 }

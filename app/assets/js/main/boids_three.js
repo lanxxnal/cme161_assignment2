@@ -134,7 +134,7 @@ gui.add(controls_state, 'show_bounding_box')
 // --------------------------------------------------------- 
 // add boids
 
-var n = 200,
+var n = 50,
     boids = [];
 
 for (var i = 0; i < n; i++) {
@@ -155,6 +155,7 @@ for (var i = 0; i < n; i++) {
     b.init_mesh_obj();
     container.add(b.mesh);
     boids.push(b);
+    // console.log(b.color)
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -188,8 +189,8 @@ function animate() {
     }
 
     // render scene
-    console.log(boids);
-    console.log(container);
+    // console.log(boids);
+    // console.log(container);
     renderer.render(scene, camera);
     
 
