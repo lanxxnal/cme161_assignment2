@@ -11,9 +11,9 @@ def index():
 def three_route(path):
     return send_from_directory('app/assets/html/', path)
 
-@app.route('/libs/<path:path>')
-def lib_route(path):
-    return send_from_directory('app/assets/js/libs', path)
+# @app.route('/libs/<path:path>')
+# def lib_route(path):
+#     return send_from_directory('app/assets/js/libs', path)
 
 # send assets (ex. assets/js/random_triangle_meshes/random_triangle_meshes.js)
 # blocks other requests, so your directories won't get listed (ex. assets/js will return "not found")

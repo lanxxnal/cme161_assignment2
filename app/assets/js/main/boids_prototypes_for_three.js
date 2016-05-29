@@ -9,7 +9,7 @@ Boid.prototype.set_parameters = function() {
     **/
 
     this.radius = Math.random() * 40;
-    // this.hue = 0.5;
+    this.hue = 0.5;
     
     // if(this.radius == 0) console.log("Action Required: You need to set a boid radius.") // delete this line
 
@@ -28,8 +28,7 @@ Boid.prototype.create_geometry = function() {
         * Action Required: fill this in using a box geometry
         * see http://threejs.org/docs/#Reference/Extras.Geometries/BoxGeometry
     **/
-
-    this.geometry = new THREE.BoxGeometry(1, 1, 1);
+    this.geometry = new THREE.BoxGeometry(this.radius, this.radius, this.radius);
     
     // if(typeof(this.geometry) == "undefined") console.log("Action Required: You need to set a boid geometry.") // delete this line
 }
@@ -52,13 +51,19 @@ Boid.prototype.create_material = function() {
                 "opacity": 0.75
             }
     **/
-
-    this.material = new THREE.MeshPhongMaterial();
-    this.material.color = this.color;
-    this.material.specular = 0x333333;
-    this.material.shininess = 0.9;
+    
+    this.material = new THREE.MeshPhongMaterial({
+    color: this.color,
+    specular: 0x333333,
+    shininess: 100
+  });
+    // this.material = new THREE.MeshPhongMaterial();
+    // this.material.color = this.color;
+    // this.material.specular = 0x333333;
+    // this.material.shininess = 0.9;
     this.material.transparent = true;
     this.material.opacity = 0.75;
+
 
     // if(typeof(this.material) == "undefined") console.log("Action Required: You need to set a boid material.") // delete this line
 }
@@ -105,7 +110,6 @@ Boid.prototype.update_mesh = function() {
     this.mesh.position.set(this.position.x, this.position.y, this.position.z);
     
     // if(typeof(this.mesh) != "undefined" && this.mesh.position.x == 0 && this.mesh.position.y == 0 && this.mesh.position.z == 0) console.log("Action Required: You need to update the mesh position.") // delete this line
-    console.log(this.mesh)
     /** bonus points:
         * No Action Required
         * calculate momentum and map it to color in HSL space

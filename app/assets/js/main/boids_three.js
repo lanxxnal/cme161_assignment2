@@ -8,7 +8,7 @@
 var viz_container_id = "container"; 
 var viz_canvas_id = "three_boid"; 
 
-// ------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------- -------------------------------
 // renderer, camera, scene 
 
 // constants
@@ -16,6 +16,7 @@ var SCENE_WIDTH = SCENE_HEIGHT = 500;
 
 // bind renderer (THREE.WebGLRenderer ==> GPU!) to canvas, set size, and enable antialiasing
 var canvas = document.getElementById(viz_canvas_id);
+console.log(canvas)
 var renderer = new THREE.WebGLRenderer({ 
     "canvas": canvas, 
     "antialias": true 
@@ -133,7 +134,7 @@ gui.add(controls_state, 'show_bounding_box')
 // --------------------------------------------------------- 
 // add boids
 
-var n = 1,
+var n = 200,
     boids = [];
 
 for (var i = 0; i < n; i++) {
@@ -185,10 +186,12 @@ function animate() {
         b.update_mesh();
         // if(i == 1 && update_boids_warning){ console.log("Action Required: update boid objects"); update_boids_warning = false; } // delete this line
     }
-    console.log(scene);
-    console.log(container);
+
     // render scene
+    console.log(boids);
+    console.log(container);
     renderer.render(scene, camera);
+    
 
     // end stats recording
     stats.end();
