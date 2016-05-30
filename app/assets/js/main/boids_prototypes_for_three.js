@@ -64,7 +64,6 @@ Boid.prototype.create_material = function() {
     // this.material.shininess = 0.9;
     this.material.transparent = true;
     this.material.opacity = 0.75;
-    console.log(this.color)
 
 
     // if(typeof(this.material) == "undefined") console.log("Action Required: You need to set a boid material.") // delete this line

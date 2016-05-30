@@ -128,9 +128,8 @@ gui.add(controls_state, 'neighborhoodRadius', 0, 300)
         for (var i = 0; i < n; i++) {
         b = boids[i];
         b._neighborhoodRadius = value;
-        b.run(boids)
-        b.update_mesh();
-        console.log(b._neighborhoodRadius)
+        // b.run(boids)
+        // b.update_mesh();
     }        
     });
 
@@ -139,9 +138,10 @@ gui.add(controls_state, 'maxSpeed', 0, 100)
         for (var i = 0; i < n; i++) {
         b = boids[i];
         b._maxSpeed = value;
-        b.run(boids)
-        b.update_mesh();
+        // b.run(boids)
+        // b.update_mesh();
     }        
+    //requestAnimationFrame(animate);
     });
 
  gui.add(controls_state, 'maxSteerForce', 0, 1)
@@ -149,9 +149,10 @@ gui.add(controls_state, 'maxSpeed', 0, 100)
         for (var i = 0; i < n; i++) {
         b = boids[i];
         b._maxSteerForce = value;
-        b.run(boids)
-        b.update_mesh();
+         // b.run(boids)
+        // b.update_mesh();
     }        
+
     });   
 /**
     * Actions Required:
@@ -218,6 +219,7 @@ function animate() {
         b = boids[i];
         b.run(boids);
         b.update_mesh();
+        //console.log(b._maxSpeed)
         // if(i == 1 && update_boids_warning){ console.log("Action Required: update boid objects"); update_boids_warning = false; } // delete this line
     }
 
