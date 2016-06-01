@@ -79,6 +79,7 @@ document.getElementById(viz_container_id).appendChild( gui.domElement );
 // this is an object that stores the state of the controls
 // when you click on the controls, it changes the values therein
 // you can reference this later in the program, for example while rendering
+// coeff_alignment, coeff_cohesion, and coeff_separation
 var controls_state = {
     "ambient_light": true,
     "directional_light": true,
@@ -86,9 +87,9 @@ var controls_state = {
     "directional_light_intensity": 1,
     "show_axis": true,
     "show_bounding_box": true,
-    "neighborhoodRadius": 100,
-    "maxSteerForce": 0.1,
-    "maxSpeed": 4
+    "coeff_alignment": 1,
+    "coeff_cohesion": 1,
+    "coeff_separation": 1
 };
 
 gui.add(controls_state, 'ambient_light')
@@ -123,32 +124,32 @@ gui.add(controls_state, 'show_bounding_box')
         else    { container.remove(bounding_box); }
     });
 
-gui.add(controls_state, 'neighborhoodRadius', 0, 300)
+gui.add(controls_state, 'coeff_alignment', 0, 100)
     .onChange(function(value) {
         for (var i = 0; i < n; i++) {
-        b = boids[i];
-        b._neighborhoodRadius = value;
+        var b = boids[i];
+        b.coeff_alignment = value;
         // b.run(boids)
         // b.update_mesh();
     }        
     });
 
-gui.add(controls_state, 'maxSpeed', 0, 100)
+gui.add(controls_state, 'coeff_separation', 0, 100)
     .onChange(function(value) {
         for (var i = 0; i < n; i++) {
-        b = boids[i];
-        b._maxSpeed = value;
+        var b = boids[i];
+        b.coeff_separation = value;
         // b.run(boids)
         // b.update_mesh();
     }        
     //requestAnimationFrame(animate);
     });
 
- gui.add(controls_state, 'maxSteerForce', 0, 1)
+ gui.add(controls_state, 'coeff_cohesion', 0, 100)
     .onChange(function(value) {
         for (var i = 0; i < n; i++) {
-        b = boids[i];
-        b._maxSteerForce = value;
+        var b = boids[i];
+        b.coeff_cohesion = value;
          // b.run(boids)
         // b.update_mesh();
     }        
