@@ -1,0 +1,26 @@
+#header {
+    background-color:black;
+    color:white;
+    text-align:center;
+}
+#slider_panel {
+    height:100px;
+    width:350px;
+}
+
+#globe_viz {
+    background-color:#eeeeee;
+    height:500px;
+    width:500px;
+    float:left;
+    padding:5px; 
+}
+
+#graphs {
+    background-color:#eeeeee;
+    height:500px;
+    width:500px;
+    float:left;
+    padding:10px; 
+}
+
