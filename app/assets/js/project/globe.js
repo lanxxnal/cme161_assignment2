@@ -209,16 +209,6 @@ d3.json("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geoj
             console.log(magnitude_array[i])
             
          }
-        // max_mag = magnitude_array.sort(d3.descending)[0]
-        // var rMin = 0;
-        // var rMax = Math.sqrt(max_mag / ( Math.PI)) * 10;
-        // rScale.domain([0, max_mag]);
-        // rScale.range([rMin, rMax]);
-
-        // path.pointRadius(function(d) {
-        //     return d.properties ? rScale(d.properties.mag) : 1;
-        // });
-
 
 
 
