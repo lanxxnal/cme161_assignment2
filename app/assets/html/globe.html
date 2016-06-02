@@ -3,7 +3,7 @@
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
-    	
+
     	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     	<script src="https://d3js.org/topojson.v1.min.js"></script>
     	<script src="https://d3js.org/queue.v1.min.js"></script>
@@ -32,8 +32,17 @@
 
 		<!-- <div id="globe_viz"> -->
 		        <div class="col-md-12" id="svg">
-		            <div style="display:none;">              
-		            </div>
+		            <div style="display:none;"> 
+		            	<div id="quake-pop-up">
+            			<div id="quake-pop-up-title"></div>
+            			<div id="quake-pop-up-content">
+                			<table> <tr>
+                    			<td><div id="quake-pop-img"></div></td>
+                    			<td><div id="quake-pop-desc"></div></td>
+                			</tr> </table>
+           				 </div>
+        			</div>             
+		        </div>
 		        <!-- </div> -->
 		        <!-- <canvas id="globeParent"></canvas>
 		        <div class="col-md-12" id="globeParent"></div>

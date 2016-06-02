@@ -221,17 +221,36 @@ d3.json("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geoj
             return d.properties ? Math.sqrt((Math.exp((d.properties.mag)))) : 1;
         }))
         .style("fill", "red");
+        // .on("mouseover", function (d) {
+        //                             var mousePosition = d3.svg.mouse(this);
+        //                             var format = d3.time.format("%Y-%m-%d %HH:%MM:%SS");
+        //                              $("#quake-pop-up").fadeOut(100, function () {
+        //                                 // Popup content
+        //                                 $("#quake-pop-up-title").html(format(new Date(parseInt(d.properties.time))));
+        //                                 $("#quake-pop-img").html(d.properties.mag);
+        //                                 // $("#quake-pop-desc").html(d.properties.place);
+        //                                 $("#quake-pop-up").css({
+        //                                     "right": 0,
+        //                                     "top": 50
+        //                                 });
+        //                                 $("#quake-pop-up").fadeIn(100);
+        //                             });
+        //                         }).
+        //                         on("mouseout", function () {
+        //                             //$("#quake-pop-up").fadeOut(50);
+        //                         }));
 
-        svg.append("g").attr("class","labels")
-        .selectAll("text").data(places.features)
-        .enter().append("text")
-        .attr("class", "label")
-        .text(function(d) { return d.properties.place })
+        // svg.append("g").attr("class","labels")
+        // .selectAll("text").data(places.features)
+        // .enter().append("text")
+        // .attr("class", "label")
+        // .text(function(d) { return d.properties.place })
 
+        // when hover on the countries, highligh the borders
         svg.append("g").attr("class","countries")
-      .selectAll("path")
+        .selectAll("path")
         .data(topojson.object(world, world.objects.countries).geometries)
-      .enter().append("path")
+        .enter().append("path")
         .attr("d", path)
         .text(function(d) { return d.properties.place });
 
