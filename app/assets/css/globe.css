@@ -68,33 +68,15 @@
   opacity:.6;
 }
 
-div#quake-pop-up {
-    display: none;
-    position:absolute;
-    color: white;
-    font-size: 14px;
-    background: rgba(0,0,0,0.5);
-    padding: 5px 10px 5px 10px;
-    -moz-border-radius: 5px 5px;
-    border-radius: 5px 5px;
-    z-index: 99;
-}
-div#quake-pop-up-title {
-    font-size: 15px;
-    width:300px;
-    margin-bottom: 4px;
-    font-weight: bolder;
-}
-div#quake-pop-up-content {
-    font-size: 14px;
-}
-div#quake-pop-desc {
-  margin-left: 10px;
-    width: 300px;
-  color: white;
-}
-div#quake-pop-img {
-    font-size: 30px;
-    font-weight: bolder;
-  color: white;
+div.tooltip {   
+  position: absolute;           
+  text-align: left;           
+  width: 150px;                  
+  height: 40px;                 
+  padding: 2px;             
+  font: 8px sans-serif;        
+  background: lightsteelblue;   
+  border: 0px;      
+  border-radius: 8px;           
+  pointer-events: none;         
 }

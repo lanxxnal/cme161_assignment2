@@ -47,73 +47,6 @@ d3.json("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geoj
 
     var graticule = d3.geo.graticule();
 
-    // g.append("path")
-    //     .datum({type: "Sphere"})
-    //     .attr("class", "sphere")
-    //     .attr("d", path)
-    //     .attr("fill", "#eeeeee");
-
-    
-
-
-    // var graticule = d3.geo.graticule();
-
-    // var selectedCountryFill = "#007ea3",
-    //     flightPathColor = "#007ea3",
-    //     landFill = "#b9b5ad",
-    //     seaFill = "#e9e4da";
-    // var startCountry = "Australia";
-    // var endCountry = "United Kingdom";
-
-    //interpolator from http://bl.ocks.org/jasondavies/4183701
-    // var d3_geo_greatArcInterpolator = function() {
-    //     var d3_radians = Math.PI / 180;
-    //     var x0, y0, cy0, sy0, kx0, ky0,
-    //         x1, y1, cy1, sy1, kx1, ky1,
-    //         d,
-    //         k;
-
-    //     function interpolate(t) {
-    //         var B = Math.sin(t *= d) * k,
-    //             A = Math.sin(d - t) * k,
-    //             x = A * kx0 + B * kx1,
-    //             y = A * ky0 + B * ky1,
-    //             z = A * sy0 + B * sy1;
-    //         return [
-    //             Math.atan2(y, x) / d3_radians,
-    //             Math.atan2(z, Math.sqrt(x * x + y * y)) / d3_radians
-    //         ];
-    //     }
-
-    //     interpolate.distance = function() {
-    //         if (d == null) k = 1 / Math.sin(d = Math.acos(Math.max(-1, Math.min(1, sy0 * sy1 + cy0 * cy1 * Math.cos(x1 - x0)))));
-    //         return d;
-    //     };
-
-    //     interpolate.source = function(_) {
-    //         var cx0 = Math.cos(x0 = _[0] * d3_radians),
-    //             sx0 = Math.sin(x0);
-    //         cy0 = Math.cos(y0 = _[1] * d3_radians);
-    //         sy0 = Math.sin(y0);
-    //         kx0 = cy0 * cx0;
-    //         ky0 = cy0 * sx0;
-    //         d = null;
-    //         return interpolate;
-    //     };
-
-    //     interpolate.target = function(_) {
-    //         var cx1 = Math.cos(x1 = _[0] * d3_radians),
-    //             sx1 = Math.sin(x1);
-    //         cy1 = Math.cos(y1 = _[1] * d3_radians);
-    //         sy1 = Math.sin(y1);
-    //         kx1 = cy1 * cx1;
-    //         ky1 = cy1 * sx1;
-    //         d = null;
-    //         return interpolate;
-    //     };
-
-    //     return interpolate;
-    // }
     queue()
         .defer(d3.json, "http://raw.githubusercontent.com/mbostock/topojson/master/examples/world-110m.json")
         .defer(d3.json, "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson")
@@ -121,6 +54,8 @@ d3.json("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geoj
 
     function ready(error, world, places) {
         if (error) throw error;
+
+        console.log(places)
 
         var ocean_fill = svg.append("defs").append("radialGradient")
           .attr("id", "ocean_fill")
@@ -162,6 +97,10 @@ d3.json("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geoj
         .attr("offset","100%").attr("stop-color", "#000")
         .attr("stop-opacity","0")  
 
+        var div = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0)
+
         svg.append("ellipse")
         .attr("cx", width / 2).attr("cy", 450)
         .attr("rx", projection.scale()*.90)
@@ -197,22 +136,8 @@ d3.json("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geoj
         .attr("class","noclicks")
         .style("fill", "url(#globe_shading)");
 
-        
-        // magnitude_array = [];
-        // for (i = 0; i < remote_json.features.length; i++) {
-        //     if (remote_json.features[i].hasOwnProperty("mag")){
-        //         magnitude_array.push(remote_json.features[i].properties.mag);
-        //     }
-            
-        //  }
-        // for (i = 0; i < magnitude_array.length; i++) {
-        //     console.log(magnitude_array[i])
-            
-        //  }
-
-
-
-        svg.append("g").attr("class","points")
+        // add earthquake points on the globe
+        svg.append("g").attr("class","point")
         .selectAll("text").data(places.features)
         .enter().append("path")
         .attr("class", "point")
@@ -220,41 +145,46 @@ d3.json("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geoj
             // console.log(d.properties.mag)
             return d.properties ? Math.sqrt((Math.exp((d.properties.mag)))) : 1;
         }))
-        .style("fill", "red");
-        // .on("mouseover", function (d) {
-        //                             var mousePosition = d3.svg.mouse(this);
-        //                             var format = d3.time.format("%Y-%m-%d %HH:%MM:%SS");
-        //                              $("#quake-pop-up").fadeOut(100, function () {
-        //                                 // Popup content
-        //                                 $("#quake-pop-up-title").html(format(new Date(parseInt(d.properties.time))));
-        //                                 $("#quake-pop-img").html(d.properties.mag);
-        //                                 // $("#quake-pop-desc").html(d.properties.place);
-        //                                 $("#quake-pop-up").css({
-        //                                     "right": 0,
-        //                                     "top": 50
-        //                                 });
-        //                                 $("#quake-pop-up").fadeIn(100);
-        //                             });
-        //                         }).
-        //                         on("mouseout", function () {
-        //                             //$("#quake-pop-up").fadeOut(50);
-        //                         }));
+        .style("fill", "red")
+        .on("mouseover", function(d) {
+            var format = d3.time.format("%Y-%m-%d %HH:%MM:%SS");
+            console.log(format(new Date(parseInt(d.properties.time))))
+            console.log(div)
+            div.transition().duration(100).style("opacity", 0.9);
+            div.html( "Place: " + d.properties.place + "<br>" +"Time: " + format(new Date(parseInt(d.properties.time)))
+                +"<br>" + "Magnitude: " + d.properties.mag)
+                .style("left", (d3.event.pageX) + "px")     
+                .style("top", (d3.event.pageY - 28) + "px"); 
+            })
+        .on("mouseout", function(d) {       
+            div.transition()        
+                .duration(100)      
+                .style("opacity", 0);
+        
 
-        // svg.append("g").attr("class","labels")
-        // .selectAll("text").data(places.features)
-        // .enter().append("text")
-        // .attr("class", "label")
-        // .text(function(d) { return d.properties.place })
+        });
+            // d3.select("#quake-pop-up-title").append("h4").text(function(d) {
+            //     console.log(d.properties.place)
+            //     return d.properties.place;
+            // }); 
+        
+
+        
+        // svg.append("g").attr("class","point")
+        // .selectAll("path").data(places.features)
+        // .enter().append("path")
+        // .attr("d", path).text(function(d){ return d.properties.place})        
+        
 
         // when hover on the countries, highligh the borders
-        svg.append("g").attr("class","countries")
-        .selectAll("path")
-        .data(topojson.object(world, world.objects.countries).geometries)
-        .enter().append("path")
-        .attr("d", path)
-        .text(function(d) { return d.properties.place });
+        // svg.append("g").attr("class","countries")
+        // .selectAll("path")
+        // .data(topojson.object(world, world.objects.countries).geometries)
+        // .enter().append("path")
+        // .attr("d", path);
+        // .text(function(d) { return d.properties.place });
 
-        position_labels();
+        // position_labels();
 
     }
 
