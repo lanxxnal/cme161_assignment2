@@ -198,17 +198,17 @@ d3.json("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geoj
         .style("fill", "url(#globe_shading)");
 
         
-        magnitude_array = [];
-        for (i = 0; i < remote_json.features.length; i++) {
-            if (remote_json.features[i].hasOwnProperty("mag")){
-                magnitude_array.push(remote_json.features[i].properties.mag);
-            }
+        // magnitude_array = [];
+        // for (i = 0; i < remote_json.features.length; i++) {
+        //     if (remote_json.features[i].hasOwnProperty("mag")){
+        //         magnitude_array.push(remote_json.features[i].properties.mag);
+        //     }
             
-         }
-        for (i = 0; i < magnitude_array.length; i++) {
-            console.log(magnitude_array[i])
+        //  }
+        // for (i = 0; i < magnitude_array.length; i++) {
+        //     console.log(magnitude_array[i])
             
-         }
+        //  }
 
 
 
@@ -218,7 +218,7 @@ d3.json("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geoj
         .attr("class", "point")
         .attr("d", path.pointRadius(function(d){
             // console.log(d.properties.mag)
-            return Math.sqrt((Math.exp((d.properties.mag))));
+            return d.properties ? Math.sqrt((Math.exp((d.properties.mag)))) : 1;
         }))
         .style("fill", "red");
 
