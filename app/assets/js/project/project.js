@@ -39,7 +39,7 @@
           }))
           .attr("class", "myPathClass")
           .enter().append("svg:path")
-          .attr("d", path.pointRadius(function(d) {
+          .attr("d", path.pointRadius(function(d) { console.log(d.properties.mag)
             return Math.sqrt((Math.exp(parseFloat(d.properties.mag))));
           }))
           .on("mouseover", function(d) {
