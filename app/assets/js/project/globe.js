@@ -1,14 +1,189 @@
-// var years_slider = new Slider(
-//   "#years_slider", {
-//     "id": "years_slider",
-//     "min": 1870,
-//     "max": 1910,
-//     "range": true,
-//     "value": [1870, 1910]
-//   });
+var hist = function(data_in, chart_id, value, chart_title) {
+
+  var margin = {
+      "top": 30,
+      "right": 30,
+      "bottom": 50,
+      "left": 30
+    },
+    width = 600 - margin.left - margin.right,
+    height = 250 - margin.top - margin.bottom;
+
+  var x = d3.scale.linear()
+    .domain([0, 1])
+    .range([0, width]);
+
+  var y = d3.scale.linear()
+    .domain([0, d3.max(data_in, function(d) {
+      return d.value[value];
+    })])
+    .range([height, 0]);
+    
+  d3.select("#" + chart_id).remove();
+  
+  var div = d3.select("#graphs").append("div").attr("id", chart_id);
+  
+  div.append("h2").text(chart_title);
+  
+  var svg = div.append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  var bar = svg.selectAll(".bar")
+    .data(data_in)
+    .enter()
+    .append("g")
+    .attr("class", "bar")
+    .attr("transform", function(d, i) {
+      return "translate(" + x(i / (data_in.length-1)) + "," + y(d.value[value]) + ")";
+    });
+
+  bar.append("rect")
+    .attr("x", 1)
+    .attr("width", width / data_in.length-1)
+    .attr("height", function(d) {
+      return height - y(d.value[value]);
+    });
+
+  var formatCount = d3.format(",.0f");
+
+  bar.append("text")
+    .attr("dy", ".75em")
+    .attr("y", -15)
+    .attr("x", (width / data_in.length - 1) / 2)
+    .attr("text-anchor", "middle")
+    .text(function(d) {
+      return formatCount(d.value.count);
+    });
+ // console.log(data_in);
+  var unique_names = data_in.map(function(d) {
+    
+    return d.key;
+  });
+
+  var xScale = d3.scale.ordinal().domain(unique_names).rangePoints([0, width]);
+
+  var xAxis = d3.svg.axis()
+    .scale(xScale)
+    .orient("bottom");
+
+  var xTicks = svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis)
+    .selectAll("text")
+    .style("text-anchor", "end")
+    .attr("font-size", 10)
+    .attr("transform", function(d) {
+      return "rotate(-50)"
+    });
 
 
+  var yAxis = d3.svg.axis()
+    .ticks(5)
+    .scale(y)
+    .orient("left");
+
+  svg.append("g")
+    .attr("class", "y axis")
+    .attr("transform", "translate(0,0)")
+    .call(yAxis)
+    .selectAll("text")
+    .style("text-anchor", "end")
+    .attr("font-size", 10);
+}
+
+
+
+
+
+// creating globe and display the earthquake data
 d3.json("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson", function(remote_json) {
+
+
+    var dNow = new Date();
+        
+  //get the GeoJSON-features
+  var quakes = remote_json.features;
+  //make a new crossfilter from the features
+  var earthquakes = crossfilter(quakes);
+
+  //testing crossfilter by counting all features
+  //var n = earthquakes.groupAll().reduceCount().value();
+//  console.log("There are " + n + " eathquakes within that file!")
+
+  //get the 'magnitude'-dimension
+  var dim_quakeMagnitude = earthquakes.dimension(function(d) {
+    return Math.round(d.properties.mag);
+  });
+  var dim_quakeTime = earthquakes.dimension(function(d) {
+    return d.properties.time;
+  });
+
+//  console.log(dim_quakeMagnitude.top(Infinity).length);
+  var group_magniDimensions = dim_quakeMagnitude.group();
+  group_magniDimensions.orderNatural();
+//  console.log(group_magniDimensions.top(Infinity));
+  var reduce_init = function() {
+    return {
+      "count": 0
+    };
+  }
+
+  var reduce_add = function(p, v, nf) {
+    ++p.count;
+    return p;
+  }
+
+  var reduce_remove = function(p, v, nf) {
+    --p.count;
+    return p;
+  }
+
+  group_magniDimensions.reduce(reduce_add, reduce_remove, reduce_init);
+
+  var render_plots = function() {
+ //  console.log(group_magniDimensions.top(Infinity));
+    hist(group_magniDimensions.top(Infinity), "quakesByMagnitude",
+      "count", "# of Earthquakes per magnitude");
+        
+  }
+
+  // magniDimension.filter([0, 10]);
+ 
+  var magniSlider = new Slider("#magniSlider", {
+    "id": "magniSlider",
+    "min": 0,
+    "max": 30,
+    "range": true,
+    "value": [0, 30]
+  });
+
+  magniSlider.on("slide", function(e) {
+    d3.select("#magniSlider_txt").text("min (ago): " + e[0] + ", max (ago): " + e[1]);
+
+    // filter based on the UI element
+   // dim_quakeMagnitude.filter(e);
+      dim_quakeTime.filter(function(d){
+      //  console.log("NOW: ", dNow.toLocaleString());
+        var maxDate = new Date();
+        maxDate.setDate(dNow.getDate()-e[0]);
+       // console.log("MaxDate: ", maxDate.toLocaleString());
+        var minDate = new Date();
+        minDate.setDate(dNow.getDate()-e[1]);
+     //   console.log("MinDate: ", minDate.toLocaleString());
+        return (d >= Date.parse(minDate) && d <= Date.parse(maxDate));
+      });
+     // group_magniDimensions.dispose();
+      
+        //testing crossfilter by counting all features
+    // re-render
+     render_plots();
+  });
+  render_plots();
+    
 
     window.remote_json = remote_json;
 
@@ -214,118 +389,14 @@ d3.json("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geoj
     
 }
 
-      //   svg.append("g").attr("class","labels")
-      //   .selectAll("text").data(places.features)
-      // .enter().append("text")
-      // .attr("class", "label")
-      // .text(function(d) { return d.properties.name })
-
-
-        // g.selectAll("path.places").data(remote_json.features)
-        // .enter().append("path")
-        // .attr("class", "places")
-        // .attr("d", path)
-        // .attr("fill", "black")
-        // .attr("fill-opacity", 0.8);
-        // }
-
-
-        // basic vars used in drawing
-    //     var globe = { type: "Sphere" },
-    //         land = topojson.feature(world, world.objects.land),
-    //         // countries = remote_json.feature(world, world.objects.countries).features,
-    //         places = remote_json.features;
-    //         borders = topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }),
-    //         i = -1;
-    //         console.log(places.length)
-    //         n = places.length;
-
-    //     // re-render your globe
-    //     var redrawGlobe = function() {
-    //         c.clearRect(0, 0, width, height);
-    //         //base globe
-    //         c.shadowBlur = 0, c.shadowOffsetX = 0, c.shadowOffsetY = 0;
-    //         c.fillStyle = seaFill, c.beginPath(), path(globe), c.fill();
-    //         c.fillStyle = landFill, c.beginPath(), path(land), c.fill();
-    //         c.strokeStyle = "#fff", c.lineWidth = .5, c.beginPath(), path(borders), c.stroke();
-    //     }
-
-    //     // console.log(places)
-    //     var points = []
-    //     for (var count = 0; count < places.length; count++) {
-    //         var coordinate = remote_json.features[count].geometry.coordinates;
-    //         points.push([coordinate[0], coordinate[1]])
-    //         // console.log(coordinates)
-
-    //     }
-    //      // canvas.selectAll("circle")
-    //      //    .data([points]).enter()
-    //      //    .append("circle")
-    //      //    .attr("cx", function (d) { console.log(projection(d)); return projection(d)[0]; })
-    //      //    .attr("cy", function (d) { return projection(d)[1]; })
-    //      //    .attr("r", "1px")
-    //      //    .attr("fill", "red");
-    //     // console.log(remote_json.features.geometry)
-
-    //     // canvas.selectAll(".pin")
-    //     // .data(window.remote_json)
-    //     // .enter().append("circle", ".pin")
-    //     // .attr("r", 0.5)
-    //     // .attr("transform", function(d) {
-    //     //     return "translate(" + projection([
-    //     //     d.features.geometry.coordinates[0],
-    //     //     d.features.geometry.coordinates[1]
-    //     //     ]) + ")";
-    //     // });
-    //     // canvas.append("path")
-    //     //     .datum(graticule)
-    //     //     .attr("class", "graticule noclicks")
-    //     //     .attr("d", path);
-
-    //     // canvas.append("g").attr("class","points")
-    //     //     .selectAll("text").data(places.features)
-    //     //   .enter().append("path")
-    //     //     .attr("class", "point")
-    //     //     .attr("d", path);
-
-    //     //letting you drag the globe around but setting it so you can't tilt the globe over
-    //     var dragBehaviour = d3.behavior.drag()
-    //         .on('drag', function() {
-    //             var dx = d3.event.dx;
-    //             var dy = d3.event.dy;
-
-    //             var rotation = projection.rotate();
-    //             var radius = projection.scale();
-    //             var scale = d3.scale.linear()
-    //                 .domain([-1 * radius, radius])
-    //                 .range([-90, 90]);
-    //             var degX = scale(dx);
-    //             var degY = scale(dy);
-    //             rotation[0] += degX;
-    //             rotation[1] -= degY;
-    //             if (rotation[1] > 90) rotation[1] = 90;
-    //             if (rotation[1] < -90) rotation[1] = -90;
-
-    //             if (rotation[0] >= 180) rotation[0] -= 360;
-    //             projection.rotate(rotation);
-    //             redrawGlobe();
-    //         })
-
-    //     // draw globe
-    //     redrawGlobe();
-
-    //     // add event handler
-    //     d3.select("#globeParent").select('canvas').call(dragBehaviour);
-
-    // }
     var m0, o0;
-function mousedown() {
-  m0 = [d3.event.pageX, d3.event.pageY];
-  o0 = projection.rotate();
-  d3.event.preventDefault();
-}
-function mousemove() {
-  if (m0) {
+    function mousedown() {
+    m0 = [d3.event.pageX, d3.event.pageY];
+    o0 = projection.rotate();
+    d3.event.preventDefault();
+    }
+    function mousemove() {
+    if (m0) {
     var m1 = [d3.event.pageX, d3.event.pageY]
       , o1 = [o0[0] + (m1[0] - m0[0]) / 6, o0[1] + (m0[1] - m1[1]) / 6];
     o1[1] = o1[1] > 30  ? 30  :
@@ -333,22 +404,22 @@ function mousemove() {
             o1[1];
     projection.rotate(o1);
     refresh();
-  }
-}
-function mouseup() {
-  if (m0) {
+    }
+    }
+    function mouseup() {
+    if (m0) {
     mousemove();
     m0 = null;
-  }
-}
+    }
+    }
 
-function refresh() {
-  svg.selectAll(".land").attr("d", path);
-  svg.selectAll(".countries path").attr("d", path);
-  svg.selectAll(".graticule").attr("d", path);
-  svg.selectAll(".point").attr("d", path);
-  position_labels();
-}
+    function refresh() {
+        svg.selectAll(".land").attr("d", path);
+        svg.selectAll(".countries path").attr("d", path);
+        svg.selectAll(".graticule").attr("d", path);
+        svg.selectAll(".point").attr("d", path);
+        position_labels();
+    }
 
 
 

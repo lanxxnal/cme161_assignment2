@@ -16,13 +16,13 @@
     padding:5px; 
 }*/
 
-#graphs {
+/*#graphs {
     background-color:#eeeeee;
     height:500px;
     width:500px;
     float:left;
     padding:10px; 
-}
+}*/
 .noclicks {
   pointer-events:none;
 }
@@ -79,4 +79,21 @@ div.tooltip {
   border: 0px;      
   border-radius: 8px;           
   pointer-events: none;         
+}
+
+.bar rect {
+  fill: steelblue;
+  shape-rendering: crispEdges;
+}
+
+.bar text {
+  background-color: black
+  fill: white;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
 }
