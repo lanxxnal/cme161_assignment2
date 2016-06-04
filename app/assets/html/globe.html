@@ -15,47 +15,51 @@
         <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/queue.v1.min.js"></script>
 <script src="http://d3js.org/topojson.v0.min.js"></script>
-<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
 
 	</head>
 
 	<body>
 
-		<div id="header">
-		<h1>Earthquake Visualization</h1>
+
+		<!-- begin container -->
+		<div class="container">
+
+			<!-- begin row -->
+			<div class="row">
+				
+				<div class=".col-xs-12 .col-md-8">
+					<div class="row">
+						<div class="col-xs-5">
+							<!-- begin header -->
+							<h1>Earthquake Visualization</h1>
+							<hr>
+							<!-- end header -->
+							Filter days <b>0</b> &nbsp&nbsp <input id="daysSlider" type="text" /> &nbsp&nbsp <b>30</b>
+						    <br> 
+						    Days range: <span id="daysSlider_txt"></span>
+						    <br>
+						    Filter magnitude <b>0.0</b> &nbsp&nbsp<input id="magnitudeSlider" type="text" /> &nbsp&nbsp <b>10.0</b> 
+						    <br>
+						    Magnitude ranges: 
+						    <br>
+						    &nbsp&nbsp &nbsp&nbsp <span id="magnitudeSliderGlobe_txt"></span>
+						    <br>
+						    &nbsp&nbsp &nbsp&nbsp <span id="magnitudeSliderGraph_txt"></span>
+						    <div id="magnitudeGraph"></div>
+						</div>
+
+						<div class="col-xs-7">
+							<div id="globeViz"></div>
+						</div>
+
+					</div>
+
+
+				</div>
+			</div>
 		</div>
 
-		
-
-		<!-- <div id="globe_viz"> -->
-		        <div class="col-md-12" id="svg">
-		            <!-- <div style="display:none;"> 
-		            	<div id="quake-pop-up">
-            			<div id="quake-pop-up-title"></div>
-            			<div id="quake-pop-up-content">
-                			<table> <tr>
-                    			<td><div id="quake-pop-img"></div></td>
-                    			<td><div id="quake-pop-desc"></div></td>
-                			</tr> </table>
-           				 </div>
-        			</div>       -->       
-		        </div>
-		        <!-- </div> -->
-		        <!-- <canvas id="globeParent"></canvas>
-		        <div class="col-md-12" id="globeParent"></div>
- -->	</div>
-				 <div id="graphs">
-   					 <h1>Graphs </h1> Filter days <b>0</b> &nbsp&nbsp
-   					 <input id="magniSlider" type="text" /> &nbsp&nbsp <b>30</b> Days range: <span id="magniSlider_txt"></span>
-
-  				</div>
-
-	<!-- 	</div> -->
-
-<!-- 		<div id="graphs">
-		<h1>Graphs </h1>
-		</div> -->
 
 		<script src="/assets/js/project/globe.js"></script>
 	</body>
