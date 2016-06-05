@@ -388,10 +388,8 @@ d3.json("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geoj
             return d.properties ? Math.sqrt((Math.exp((d.properties.mag)))) : 1;
         }))
         .style("fill", "red")
-        .on("mouseover", function(d) {
+        .on("mouseover", function(d) { // creating hover boxes of earthquake info
             var format = d3.time.format("%Y-%m-%d %HH:%MM:%SS");
-       //     console.log(format(new Date(parseInt(d.properties.time))))
-        //    console.log(div)
             div.transition().duration(100).style("opacity", 0.9);
             div.html( "Place: " + d.properties.place + "<br>" +"Time: " + format(new Date(parseInt(d.properties.time)))
                 +"<br>" + "Magnitude: " + d.properties.mag)
@@ -435,6 +433,7 @@ d3.json("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geoj
         
     }
 
+// define mouse events
 var m0, o0;
 function mousedown() {
   m0 = [d3.event.pageX, d3.event.pageY];

@@ -58,7 +58,19 @@
 						</p> -->
 
 						<p>
-							Here is the visualization of <a href="assets/html/globe.html" target="_blank">USGS Earthquake</a>. Play with it by clicking your mouse and see how particles move. The library used is <a href= "http://threejs.org/" target = "_blank"> Three.js</a>.
+							We created a 3d interactive visual display for all earthquakes recorded around the world in the past 30 days, according to data collected by the <a href = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson" target = "_blank">USGS </a>(United States Geological Survey). The data we used came in geojson format. Each data entry contains geographical, time, and descriptive data. </br>
+
+							Our visualization features in: </br>
+							<ul style="list-style-type:disc">
+							<li>Interactive 3d Globe showing the geographical locations of all the earthquakes (varying size by magnitude; displaying more details of an earthquake when hovering)</li>
+							<li>Histogram grouping all recorded earthquakes by magnitude</li>
+							<li>Sliders to filter data on the 3d Globe display and 2d histogram (accomplished by brushing/linking through crossfilter library)</li>
+							</ul>
+	
+							Please see our project <a href="assets/html/globe.html" target="_blank">HERE</a>. Play with it by rotating the globe, filter the magnitude and see how the visualizations interact. </br>
+ 							The library used are <a href="http://square.github.io/crossfilter/" target="_blank">crossfilter.js</a> and <a href="https://d3js.org/" target="_blank">D3.js</a>. We also get help from the boostrap slider lib, and the <a href = "http://bl.ocks.org/dwtkns/4973620" target = "_blank">Faux-3D arcs</a>. </br>
+
+ 							Our code can be found in this <a href = "github.com/lxlxlxlx/cme161_assignment2" target = "_blank">repo</a>.
 						</p>
 
 						<hr>
